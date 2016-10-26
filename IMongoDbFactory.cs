@@ -2,7 +2,7 @@ using MongoDB.Driver;
 
 namespace Yoda.MongoDb
 {
-    public interface IMongoDbFactory<out TDatabase> where TDatabase : MongoDatabase
+    public interface IMongoDbFactory
     {
         //
         // Summary:
@@ -14,6 +14,6 @@ namespace Yoda.MongoDb
         //
         // Returns:
         //     An instance of TDatabase.
-        TDatabase Create(MongoDbFactoryOptions options);
+        MongoDatabase Create(MongoDbFactoryOptions options);
     }
 }

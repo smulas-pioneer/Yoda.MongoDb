@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Yoda.Common.Interfaces;
-using Yoda.MongoDb.Infrastucture;
 
 namespace Yoda.MongoDb
 {
@@ -17,14 +16,12 @@ namespace Yoda.MongoDb
         /// Db Context corrente
         /// </summary>
         protected readonly MongoDatabase _database = null;
-
         private readonly IQuerySpecFactory _querySpecFactory = null;
 
-
         #region Ctor
-        public MongoDbUnitOfWork(IMongoDbFactory<MongoDatabase> dbFactory)
+        public MongoDbUnitOfWork(IMongoDbFactory dbFactory)
         : this(dbFactory, null) { }
-        public MongoDbUnitOfWork(IMongoDbFactory<MongoDatabase> dbFactory, IQuerySpecFactory querySpecFactory)
+        public MongoDbUnitOfWork(IMongoDbFactory dbFactory, IQuerySpecFactory querySpecFactory)
         : this(dbFactory.Create(null), querySpecFactory) { }
 
         public MongoDbUnitOfWork(MongoDatabase context)
@@ -34,7 +31,6 @@ namespace Yoda.MongoDb
         {
             this._database = context;
             this._querySpecFactory = querySpecFactory;
-            this._database.Server.Ping(); // check connectivity
         }
 
         #endregion
@@ -60,7 +56,7 @@ namespace Yoda.MongoDb
                 {
                     if (_database != null)
                     {
-                        _database.Server.Disconnect();
+                        // TODO: check if something needs to be relesad!
                         _disposed = true;
                         disposing = false;
                     }

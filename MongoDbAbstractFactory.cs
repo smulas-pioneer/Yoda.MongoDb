@@ -1,30 +1,30 @@
-using Yoda.MongoDb.Infrastucture;
+using MongoDB.Driver;
 
 namespace Yoda.MongoDb
 {
-    public abstract class MongoDbAbstractFactory<TDatabase> : IMongoDbFactory<TDatabase> where TDatabase : MongoDatabase
+    public abstract class MongoDbAbstractFactory : IMongoDbFactory
     {
-        // private readonly DbContextOptions<TContext> _dboptions;
-        // private readonly DbContextFactoryOptions _facOptions;
+        private readonly MongoDbConnectionOptions _dboptions;
+        private readonly MongoDbFactoryOptions _facOptions;
 
-        public MongoDbAbstractFactory(DbContextOptions<TContext> dbOptions) : this(null, dbOptions) { }
-        public MongoDbAbstractFactory(DbContextFactoryOptions facOptions, DbContextOptions<TContext> dbOptions)
+        public MongoDbAbstractFactory(MongoDbConnectionOptions dbOptions) : this(null, dbOptions) { }
+        public MongoDbAbstractFactory(MongoDbFactoryOptions facOptions, MongoDbConnectionOptions dbOptions)
         {
-            this._dboptions = dbOptions;
+            // this._dboptions = dbOptions;
             this._facOptions = facOptions;
         }
 
-        public TDatabase Create(DbContextFactoryOptions options)
+        public MongoDatabase Create(MongoDbFactoryOptions options)
         {
             return InternalCreate(options ?? this._facOptions, this._dboptions);
         }
 
-        public TDatabase Create()
+        public MongoDatabase Create()
         {
             return InternalCreate(this._facOptions, this._dboptions);
         }
 
-        protected abstract TDatabase InternalCreate(MongoDbFactoryOptions facOptions, DbContextOptions<TContext> dbOptions);
+        protected abstract MongoDatabase InternalCreate(MongoDbFactoryOptions facOptions, MongoDbConnectionOptions dbOptions);
 
     }
 }
