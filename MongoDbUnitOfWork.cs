@@ -132,7 +132,7 @@ namespace Yoda.MongoDb
 
         public void Update<TEntity>(string collectionName, params TEntity[] entities) where TEntity : class
         {
-            Add<TEntity>(collectionName, entities.AsEnumerable());
+            Update<TEntity>(collectionName, entities.AsEnumerable());
         }
 
         public void DeleteByKey<TEntity>(string collectionName, object id) where TEntity : class
